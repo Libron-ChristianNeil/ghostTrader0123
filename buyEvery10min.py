@@ -81,6 +81,7 @@ def okx_request(method, path, data=None, params=None, auth=True):
             "OK-ACCESS-SIGN": _sign(ts, method, path, body_str),
             "OK-ACCESS-TIMESTAMP": ts,
             "OK-ACCESS-PASSPHRASE": PASSPHRASE,
+            "x-simulated-trading": "1" if DRY_RUN else "0"
         })
     try:
         if method == "GET":
@@ -149,6 +150,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
