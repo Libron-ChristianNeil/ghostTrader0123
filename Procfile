@@ -1,2 +1,3 @@
-worker: python buyEvery10min.py
+worker: python trial.py
+
 
