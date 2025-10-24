@@ -117,6 +117,10 @@ def place_order(qty):
 def calc_qty(price):
     effective = USD_PER_TRADE * LEVERAGE
     return round(effective / price, QTY_DECIMALS)
+    # Round DOWN to nearest 0.01 ETH (assuming step size = 0.01)
+    step_size = 0.01
+    qty = (raw_qty // step_size) * step_size
+    return round(qty, 2)  # 2 decimals match step size
 
 # -------------------------
 # Main loop
@@ -150,6 +154,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
