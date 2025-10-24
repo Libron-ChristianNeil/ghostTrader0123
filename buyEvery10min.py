@@ -31,8 +31,8 @@ from pathlib import Path
 env_path = Path(__file__).parent / "demo_keys.env"
 load_dotenv(dotenv_path=env_path)
 API_KEY = os.getenv("API_KEY_DEMO")
-SECRET_KEY = os.getenv("SECRET_KEY-DEMO")
-PASSPHRASE = os.getenv("PASSPHRASE-DEMO")
+SECRET_KEY = os.getenv("SECRET_KEY_DEMO")
+PASSPHRASE = os.getenv("PASSPHRASE_DEMO")
 
 if not (API_KEY and SECRET_KEY and PASSPHRASE):
     raise SystemExit("❌ Missing API credentials in .env")
@@ -149,6 +149,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
