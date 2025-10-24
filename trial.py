@@ -32,7 +32,7 @@ from dotenv import load_dotenv
 # -------------------------
 # Load environment
 # -------------------------
-env_path = Path(__file__).parent / "demo_keys.env"
+env_path = Path(__file__).parent / ".env"
 load_dotenv(dotenv_path=env_path)
 
 # OKX API keys (use demo keys here)
@@ -51,7 +51,7 @@ if not (API_KEY and SECRET_KEY and PASSPHRASE):
 # -------------------------
 BASE_URL = "https://www.okx.com"
 USE_TOR = False
-PROXIES = {'http': 'socks5h://127.0.0.1:9150', 'https': 'socks5h://127.0.0.1:9150'}
+PROXIES = {}
 
 # Instrument & strategy
 INST_ID = "ETH-USDT-SWAP"       # the perpetual futures instrument
@@ -668,4 +668,5 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         logger.info("Interrupted by user. Exiting.")
     notify("Bot stopped (script exit).")
+
 
