@@ -50,7 +50,7 @@ if not (API_KEY and SECRET_KEY and PASSPHRASE):
 # Config (tweakable)
 # -------------------------
 BASE_URL = "https://www.okx.com"
-USE_TOR = True
+USE_TOR = False
 PROXIES = {'http': 'socks5h://127.0.0.1:9150', 'https': 'socks5h://127.0.0.1:9150'}
 
 # Instrument & strategy
@@ -668,3 +668,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         logger.info("Interrupted by user. Exiting.")
     notify("Bot stopped (script exit).")
+
