@@ -134,11 +134,11 @@ def main():
         qty = calc_qty(price)
         log.info(f"Price: {price:.2f}, Buy Qty: {qty} ETH (x{LEVERAGE} leverage)")
 
-        if DRY_RUN:
-            log.info("DRY_RUN=True → no order sent.")
-        else:
-            res = place_order(qty)
-            log.info("Order response: %s", json.dumps(res))
+        # if DRY_RUN:
+        #     log.info("DRY_RUN=True → no order sent.")
+        # else:
+        res = place_order(qty)
+        log.info("Order response: %s", json.dumps(res))
 
         log.info("Sleeping for %d seconds...", INTERVAL_SECONDS)
         try:
@@ -149,6 +149,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
