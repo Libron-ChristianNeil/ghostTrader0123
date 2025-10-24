@@ -28,7 +28,7 @@ from dotenv import load_dotenv
 # Load secrets from .env
 # -------------------------
 env_path = Path(__file__).parent / ".env"
-load_dotenv()
+load_dotenv(dotenv_path=env_path)
 API_KEY = os.getenv("API_KEY_DEMO")
 SECRET_KEY = os.getenv("SECRET_KEY-DEMO")
 PASSPHRASE = os.getenv("PASSPHRASE-DEMO")
@@ -148,5 +148,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
