@@ -34,7 +34,7 @@ API_KEY = os.getenv("API_KEY_DEMO")
 SECRET_KEY = os.getenv("SECRET_KEY-DEMO")
 PASSPHRASE = os.getenv("PASSPHRASE-DEMO")
 
-if not (API_KEY and SECRET_KEY and PASSPHRASE):
+if not (API_KEY_DEMO and SECRET_KEY_DEMO and PASSPHRASE_DEMO):
     raise SystemExit("❌ Missing API credentials in .env")
 
 # -------------------------
@@ -149,6 +149,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
