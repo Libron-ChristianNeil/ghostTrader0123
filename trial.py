@@ -32,7 +32,7 @@ from dotenv import load_dotenv
 # -------------------------
 # Load environment
 # -------------------------
-env_path = Path(__file__).parent / ".env"
+env_path = Path(__file__).parent / "demo_keys.env"
 load_dotenv(dotenv_path=env_path)
 
 # OKX API keys (use demo keys here)
@@ -668,5 +668,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         logger.info("Interrupted by user. Exiting.")
     notify("Bot stopped (script exit).")
+
 
 
