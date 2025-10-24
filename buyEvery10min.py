@@ -19,6 +19,7 @@ import json
 import hmac
 import base64
 import hashlib
+import math
 from datetime import datetime, timezone
 import logging
 import requests
@@ -114,13 +115,51 @@ def place_order(qty):
     }
     return okx_request("POST", "/api/v5/trade/order", data=data, auth=True)
 
+# -------------------------
+# Fetch instrument info
+# -------------------------
+_instrument_info_cache = {}
+
+def get_instrument_info(inst_id=INST_ID):
+    """Fetch instrument info (min size and lot size) from OKX."""
+    if inst_id in _instrument_info_cache:
+        return _instrument_info_cache[inst_id]
+
+    res = okx_request("GET", "/api/v5/public/instruments", params={"instType": "SWAP"}, auth=False)
+    if not res or "data" not in res:
+        log.warning("Failed to fetch instrument info")
+        return {"minSz": 0.01, "lotSz": 0.01}  # fallback
+
+    for item in res["data"]:
+        if item["instId"] == inst_id:
+            info = {"minSz": float(item["minSz"]), "lotSz": float(item["lotSz"])}
+            _instrument_info_cache[inst_id] = info
+            return info
+
+    # fallback if instrument not found
+    return {"minSz": 0.01, "lotSz": 0.01}
+
+# -------------------------
+# Calculate order qty respecting lot size
+# -------------------------
 def calc_qty(price):
     effective = USD_PER_TRADE * LEVERAGE
-    return round(effective / price, QTY_DECIMALS)
-    # Round DOWN to nearest 0.01 ETH (assuming step size = 0.01)
-    step_size = 0.01
+    raw_qty = effective / price
+
+    info = get_instrument_info(INST_ID)
+    min_size = info["minSz"]
+    step_size = info["lotSz"]
+
+    # Floor qty to nearest multiple of step_size
     qty = (raw_qty // step_size) * step_size
-    return round(qty, 2)  # 2 decimals match step size
+
+    # Ensure qty >= min_size
+    if qty < min_size:
+        qty = min_size
+
+    # Round to appropriate decimals
+    decimals = max(0, -int(round(math.log10(step_size))))
+    return round(qty, decimals)
 
 # -------------------------
 # Main loop
@@ -154,6 +193,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
