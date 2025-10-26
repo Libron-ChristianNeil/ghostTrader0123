@@ -24,7 +24,7 @@ SL = 0.018                        # 2% Stop Loss
 
 SMALL_INTERVAL = "5m"         # can be 1m, 3m, 5m, 15m, 1H, 4H, 1D, etc.
 LARGE_INTERVAL = "1H" 
-REFRESH_SEC = 300        # how often to refresh
+REFRESH_SEC = 120        # how often to refresh
 LIMIT = 300             # number of candles to fetch
 
 # === Tor Proxy (default port 9150) ===
@@ -557,4 +557,5 @@ def simulate_monitor_sar_and_trade():
 
 if __name__ == "__main__":
     simulate_monitor_sar_and_trade()
+
 
