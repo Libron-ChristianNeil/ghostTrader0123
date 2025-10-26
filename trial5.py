@@ -15,7 +15,7 @@ import time
 # === CONFIG ===
 INSTRUMENT_ID = "SOL-USDT-SWAP"  # Solana perpetual futures
 LIVE_MODE = False                # ⚠️ Set to False for demo (paper), True for live trades
-USE_TOR = True                   # ✅ Toggle Tor proxy ON/OFF
+USE_TOR = False                   # ✅ Toggle Tor proxy ON/OFF
 USD_AMOUNT = 1000
 LEVERAGE = 3
 TPSL = True                       # ✅ Toggle Take Profit / Stop Loss ON/OFF
@@ -557,3 +557,4 @@ def simulate_monitor_sar_and_trade():
 
 if __name__ == "__main__":
     monitor_sar_and_trade()
+
