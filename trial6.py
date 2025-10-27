@@ -24,7 +24,7 @@ SL = 0.018                        # 2% Stop Loss
 
 SMALL_INTERVAL = "5m"         # can be 1m, 3m, 5m, 15m, 1H, 4H, 1D, etc.
 LARGE_INTERVAL = "1H" 
-REFRESH_SEC = 120        # how often to refresh
+REFRESH_SEC = 90        # how often to refresh
 LIMIT = 300             # number of candles to fetch
 
 # === Tor Proxy (default port 9150) ===
@@ -334,7 +334,8 @@ def log_event(event_type, message):
     """
     log_dir = Path(__file__).parent / "logs"
     log_dir.mkdir(exist_ok=True)
-    log_file = log_dir / f"trading_log_{datetime.now().strftime('%Y-%m-%d')}.log"
+    # log_file = log_dir / f"trading_log_{datetime.now().strftime('%Y-%m-%d')}.log"
+    log_file = log_dir / f"trading_log.log"
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     log_line = f"[{timestamp}] [{event_type.upper()}] {message}\n"
@@ -558,3 +559,4 @@ def simulate_monitor_sar_and_trade():
 
 if __name__ == "__main__":
     simulate_monitor_sar_and_trade()
+
