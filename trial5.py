@@ -307,17 +307,27 @@ def calc_sar(df, af=0.02, af_max=0.2):
 # ===        Detect Reversal      ===  #
 #======================================#
 def detect_reversal(df):
-    """Detect SAR flip: when SAR crosses from below to above price or vice versa."""
-    if len(df) < 2:
+    """Detect SAR reversal, including within the first two bars of the new trend."""
+    if len(df) < 3:
         return None
-    prev = df.iloc[-2]
-    curr = df.iloc[-1]
 
-    prev_bullish = prev["SAR"] < prev["close"]
+    prev2 = df.iloc[-3]   # two bars ago
+    prev1 = df.iloc[-2]   # one bar ago
+    curr = df.iloc[-1]    # current bar
+
+    # Determine bullish/bearish state for each bar
+    prev2_bullish = prev2["SAR"] < prev2["close"]
+    prev1_bullish = prev1["SAR"] < prev1["close"]
     curr_bullish = curr["SAR"] < curr["close"]
 
-    if prev_bullish != curr_bullish:
+    # Detect a reversal if:
+    # - It occurred in the last two bars (prev2 vs prev1 or prev1 vs curr)
+    # - And current bar is in the new direction (to avoid false mid-trend triggers)
+    if prev2_bullish != prev1_bullish and curr_bullish == prev1_bullish:
         return "BULLISH" if curr_bullish else "BEARISH"
+    elif prev1_bullish != curr_bullish:
+        return "BULLISH" if curr_bullish else "BEARISH"
+
     return None
 #======================================#
 
@@ -558,3 +568,4 @@ def simulate_monitor_sar_and_trade():
 
 if __name__ == "__main__":
     monitor_sar_and_trade()
+
