@@ -17,10 +17,10 @@ INSTRUMENT_ID = "SOL-USDT-SWAP"  # Solana perpetual futures
 LIVE_MODE = False                # ⚠️ Set to False for demo (paper), True for live trades
 USE_TOR = False                   # ✅ Toggle Tor proxy ON/OFF
 USD_AMOUNT = 1000
-LEVERAGE = 3
+LEVERAGE = 5
 TPSL = True                       # ✅ Toggle Take Profit / Stop Loss ON/OFF
-TP = 0.037                        # 4% Take Profit
-SL = 0.018                        # 2% Stop Loss
+TP = 0.012                       # 4% Take Profit
+SL = 0.02                        # 2% Stop Loss
 
 SMALL_INTERVAL = "5m"         # can be 1m, 3m, 5m, 15m, 1H, 4H, 1D, etc.
 LARGE_INTERVAL = "1H" 
@@ -509,12 +509,24 @@ def simulate_monitor_sar_and_trade():
                 trade_direction = current_position['trade_direction']
                 entry_price = current_position['entry_price']
 
-                # Check SL
-                sl_hit = (trade_direction == "long" and current_price <= entry_price * (1 - SL/LEVERAGE)) or \
-                         (trade_direction == "short" and current_price >= entry_price * (1 + SL/LEVERAGE))
+                # Check SL and TP
+                sl_hit = (trade_direction == "long" and current_price <= entry_price * (1 - SL / LEVERAGE)) or \
+                        (trade_direction == "short" and current_price >= entry_price * (1 + SL / LEVERAGE))
+
+                tp_hit = (trade_direction == "long" and current_price >= entry_price * (1 + TP / LEVERAGE)) or \
+                        (trade_direction == "short" and current_price <= entry_price * (1 - TP / LEVERAGE))
+
                 if sl_hit:
                     print(f"❌ SL hit for {trade_direction.upper()} @ {current_price}, closing simulated position...")
-                    log_event("STOPLOSS", f"Postion stop loss triggered for {current_position['trade_direction'].upper()} @ Entry: {current_position['entry_price']})")
+                    log_event("STOPLOSS", f"Position stop loss triggered for {current_position['trade_direction'].upper()} @ Entry: {current_position['entry_price']}")
+                    open_position = False
+                    current_position = None
+                    time.sleep(REFRESH_SEC)
+                    continue
+
+                elif tp_hit:
+                    print(f"✅ TP hit for {trade_direction.upper()} @ {current_price}, closing simulated position...")
+                    log_event("TAKEPROFIT", f"Position take profit triggered for {current_position['trade_direction'].upper()} @ Entry: {current_position['entry_price']}")
                     open_position = False
                     current_position = None
                     time.sleep(REFRESH_SEC)
@@ -569,5 +581,6 @@ def simulate_monitor_sar_and_trade():
 
 if __name__ == "__main__":
     simulate_monitor_sar_and_trade()
+
 
 
