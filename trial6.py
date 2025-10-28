@@ -345,7 +345,7 @@ def log_event(event_type, message):
     log_dir = Path(__file__).parent / "logs"
     log_dir.mkdir(exist_ok=True)
     # log_file = log_dir / f"trading_log_{datetime.now().strftime('%Y-%m-%d')}.log"
-    log_file = log_dir / f"trading_log.log"
+    log_file = log_dir / f"trading_log2.log"
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     log_line = f"[{timestamp}] [{event_type.upper()}] {message}\n"
@@ -581,6 +581,7 @@ def simulate_monitor_sar_and_trade():
 
 if __name__ == "__main__":
     simulate_monitor_sar_and_trade()
+
 
 
 
