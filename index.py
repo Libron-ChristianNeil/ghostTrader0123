@@ -507,7 +507,7 @@ def simulate_monitor_sar_and_trade():
             large_bullish = large_sar < current_price
             large_bearish = large_sar > current_price
 
-            print(f"\n🕒 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | "
+            print(f"\n🕒 {datetime.now(UTC8).strftime('%Y-%m-%d %H:%M:%S')} | "
                   f"Price: {current_price:.4f} | Small SAR ({SMALL_INTERVAL}): {small_sar:.2f} | Large SAR ({LARGE_INTERVAL}): {large_sar:.2f}")
             print(f"Reversal: {reversal} | Large Trend: {'BULLISH' if large_bullish else 'BEARISH'}")
 
@@ -677,3 +677,4 @@ def choose_monitoring_method():
 if __name__ == "__main__":
     configure_settings()
     choose_monitoring_method()  
+
